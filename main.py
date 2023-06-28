@@ -1,7 +1,7 @@
 from ubinascii import hexlify
 import machine
 from umqttsimple import MQTTClient
-from utime import sleep_ms
+from utime import sleep_ms, time
 
 # MQTT Stuff
 CLIENT_ID = hexlify(machine.unique_id()) #To create an MQTT client, we need to get the PICOW unique ID
@@ -40,8 +40,11 @@ mqttClient.connect()
 mqttClient.subscribe(SUBSCRIBE_TOPIC)
 #print(f"Connected to MQTT  Broker :: {MQTT_BROKER} successfully!")
 
+startTime_s = time()
+
 while True:
     mqttClient.check_msg()
-    if(messageCounter > 5 and currentGateStatus is False):
+    if((messageCounter > 5 and currentGateStatus is False)
+       or time() - startTime_s > 300):
         machine.soft_reset()
     sleep_ms(100)
