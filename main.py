@@ -1,7 +1,7 @@
 from ubinascii import hexlify
 import machine
 from umqttsimple import MQTTClient
-import utime
+from utime import sleep_ms
 
 # MQTT Stuff
 CLIENT_ID = hexlify(machine.unique_id()) #To create an MQTT client, we need to get the PICOW unique ID
@@ -11,23 +11,30 @@ ADAFRUIT_USERNAME = "michelow"
 ADAFRUIT_PASSWORD = "aio_xnAU80fke1w7PYPBzSyxLnQZYAwO"
 SUBSCRIBE_TOPIC = b"michelow/f/gate"
 
+# pins
+led = machine.Pin(20, machine.Pin.OUT)
+onboard_LED = machine.Pin("LED", machine.Pin.OUT)
+
 # MQTT subscribe callback (gate info)    
-def sub_cb(topic, msg):
+def MQTT_subscribe_callback(topic, msg):
+    onboard_LED.toggle()
     if msg.decode() == "True":
         led.value(1)
     else:
         led.value(0)
+    sleep_ms(100)
+    onboard_LED.toggle()
 
-print(f"Begin connection with MQTT Broker :: {MQTT_BROKER}")
+#print(f"Begin connection with MQTT Broker :: {MQTT_BROKER}")
 mqttClient = MQTTClient(CLIENT_ID, MQTT_BROKER, PORT, ADAFRUIT_USERNAME, ADAFRUIT_PASSWORD, keepalive=60)
-mqttClient.set_callback(sub_cb) # whenever a new message comes (to picoW), print the topic and message (The call back function will run whenever a message is published on a topic that the PicoW is subscribed to.)
+# whenever a new message comes (to picoW), execute callback function
+mqttClient.set_callback(MQTT_subscribe_callback)
 mqttClient.connect()
 mqttClient.subscribe(SUBSCRIBE_TOPIC)
-print(f"Connected to MQTT  Broker :: {MQTT_BROKER} successfully!")
-
-# pins
-led = machine.Pin(20, machine.Pin.OUT)
+#print(f"Connected to MQTT  Broker :: {MQTT_BROKER} successfully!")
 
 while True:
-    mqttClient.check_msg()
-    utime.sleep_ms(500)
+    message = mqttClient.check_msg()
+    if(message is not None):
+        print(message)
+    sleep_ms(200)
