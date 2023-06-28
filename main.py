@@ -15,12 +15,19 @@ SUBSCRIBE_TOPIC = b"michelow/f/gate"
 led = machine.Pin(20, machine.Pin.OUT)
 onboard_LED = machine.Pin("LED", machine.Pin.OUT)
 
+currentGateStatus = False
+messageCounter = 0
+
 # MQTT subscribe callback (gate info)    
 def MQTT_subscribe_callback(topic, msg):
     onboard_LED.toggle()
+    global messageCounter
+    messageCounter += 1
     if msg.decode() == "True":
+        currentGateStatus = True
         led.value(1)
     else:
+        currentGateStatus = False
         led.value(0)
     sleep_ms(100)
     onboard_LED.toggle()
@@ -34,7 +41,7 @@ mqttClient.subscribe(SUBSCRIBE_TOPIC)
 #print(f"Connected to MQTT  Broker :: {MQTT_BROKER} successfully!")
 
 while True:
-    message = mqttClient.check_msg()
-    if(message is not None):
-        print(message)
-    sleep_ms(200)
+    mqttClient.check_msg()
+    if(messageCounter > 5 and currentGateStatus is False):
+        machine.soft_reset()
+    sleep_ms(100)

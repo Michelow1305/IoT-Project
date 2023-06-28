@@ -18,7 +18,7 @@ def do_connect():
         sta_if.connect(SSID, SSID_PASSWORD) # type: ignore
         while not sta_if.isconnected():
             #print("Attempting to connect....")
-            utime.sleep(1)
+            utime.sleep_ms(100)
     #print('Connected! Network config:', sta_if.ifconfig())
     
 #print("Connecting to your wifi...")
