@@ -16,13 +16,10 @@ led = machine.Pin(20, machine.Pin.OUT)
 onboard_LED = machine.Pin("LED", machine.Pin.OUT)
 
 currentGateStatus = False
-messageCounter = 0
 
 # MQTT subscribe callback (gate info)    
 def MQTT_subscribe_callback(topic, msg):
     onboard_LED.toggle()
-    global messageCounter
-    messageCounter += 1
     if msg.decode() == "True":
         currentGateStatus = True
         led.value(1)
@@ -44,7 +41,8 @@ startTime_s = time()
 
 while True:
     mqttClient.check_msg()
-    if((messageCounter > 5 and currentGateStatus is False)
-       or time() - startTime_s > 300):
-        machine.soft_reset()
-    sleep_ms(100)
+    timeElapsed_s = time() - startTime_s
+    if((timeElapsed_s > 21 and currentGateStatus is False)
+       or timeElapsed_s > 100):
+        machine.reset()
+    sleep_ms(50)
