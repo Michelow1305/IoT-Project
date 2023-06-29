@@ -18,20 +18,30 @@ PUBLISH_TOPIC = b"michelow/f/gate"
 
 ## MQTT publish function with gate info    
 def publishGateState():
-    led_onboard.toggle()
-    utime.sleep_ms(20)
-    led_onboard.toggle()
-    gateOpen = bool(hall.value())
-    mqttClient.publish(topic=PUBLISH_TOPIC, msg=str(int(gateOpen)).encode(), qos=1) # type: ignore
-    #print(f"Message published: Gate open: {gateOpen}.")
+    try:
+        global gateOpen
+        gateOpen = bool(hall.value())
+        mqttClient.publish(topic=PUBLISH_TOPIC, msg=str(int(gateOpen)).encode(), qos=1) # type: ignore
+        
+        # blink
+        led_onboard.toggle()
+        utime.sleep_ms(20)
+        led_onboard.toggle()
+    except:
+        machine.reset()
 
 ## Callback function to handle interrupt event
 def interrupt_callback(pin):
-    publishGateState()
+    for i in range(0, 3):
+        publishGateState()
+        utime.sleep(1)
 
 #print(f"Begin connection with MQTT Broker :: {MQTT_BROKER}")
 mqttClient = MQTTClient(CLIENT_ID, MQTT_BROKER, PORT, ADAFRUIT_USERNAME, ADAFRUIT_PASSWORD, keepalive=60)
-mqttClient.connect()
+try:
+    mqttClient.connect()
+except:
+    machine.reset()
 #print(f"Connected to MQTT  Broker :: {MQTT_BROKER} successfully!")
 
 ## Configure pin 14 as an input pin with an interrupt
@@ -40,10 +50,7 @@ hall.irq(trigger=(machine.Pin.IRQ_RISING | machine.Pin.IRQ_FALLING), handler=int
 publishGateState() # inital publish
 #print("Initial publish done, starting routine.")
 
-## Main loop
 while True:
-    if(gateOpen):
-        utime.sleep(3) # publish every 3 seconds to be very sure it arrives
-    else:
-        utime.sleep(60) # if its closed, we dont really worry or care
-    publishGateState()
+    utime.sleep(100)
+    mqttClient.disconnect()
+    machine.reset()
