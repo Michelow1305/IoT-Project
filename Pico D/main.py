@@ -35,7 +35,7 @@ def MQTT_subscribe_callback(topic, msg):
         picoGLastSeen = time()
     elif msg.decode() == "restart":
         sendRestartRequest()
-        utime.sleep(2)
+        sleep(2)
         machine.reset()
 
     # blink
