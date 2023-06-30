@@ -17,8 +17,6 @@ ADAFRUIT_PASSWORD = "aio_xnAU80fke1w7PYPBzSyxLnQZYAwO"
 PUBLISH_TOPIC = b"michelow/f/gate"
 SUBSCRIBE_TOPIC = b"michelow/f/alive"
 
-picoDLastSeen = 0
-
 def sendAliveStatus():
     mqttClient.publish(topic=PUBLISH_TOPIC, msg=str("G").encode(), qos=1) # type: ignore
 
@@ -44,6 +42,7 @@ def interrupt_callback(pin):
 
 def MQTT_subscribe_callback(topic, msg):
     if msg.decode() == "D":
+        global picoDLastSeen
         picoDLastSeen = utime.time()
 
 
@@ -63,6 +62,9 @@ hall.irq(trigger=(machine.Pin.IRQ_RISING | machine.Pin.IRQ_FALLING), handler=int
 
 publishGateState() # inital publish
 #print("Initial publish done, starting routine.")
+
+global picoDLastSeen
+picoDLastSeen = utime.time()
 
 while True:
     try:

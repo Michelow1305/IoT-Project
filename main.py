@@ -9,7 +9,6 @@ onboard_LED = machine.Pin("LED", machine.Pin.OUT)
 buzzer = machine.Pin(15, machine.Pin.OUT)
 currentGateStatus = True # True to prevent beeping while restart
 previousGateStatus = True 
-picoGLastSeen = 0
 
 ## MQTT Stuff
 CLIENT_ID = hexlify(machine.unique_id()) #To create an MQTT client, we need to get the PICOW unique ID
@@ -73,6 +72,9 @@ try:
 except:
     machine.reset()
 #print(f"Connected to MQTT  Broker :: {MQTT_BROKER} successfully!")
+
+global picoGLastSeen
+picoGLastSeen = time()
 
 while True:
     try:
