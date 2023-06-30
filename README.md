@@ -78,7 +78,9 @@ Now, I want to describe the other pico on my living room desk, referred to as â€
 
 ### Pico D
 This pico just needs a buzzer and an LED. It is connected as follows:
+
 ----------------------CONNECTION DIAGRAM GOES HERE-------------------------
+
 ## Platform
 The platform I used was the cloud based Adafruit MQTT broker. It is easy to set up and worked very well for me. I use the free plan, since it is enough for my project. 
 
