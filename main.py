@@ -33,11 +33,18 @@ def MQTT_subscribe_callback(topic, msg):
     elif msg.decode() == "G":
         global picoGLastSeen
         picoGLastSeen = time()
+    elif msg.decode() == "restart":
+        sendRestartRequest()
+        utime.sleep(2)
+        machine.reset()
 
     # blink
     onboard_LED.toggle()
     sleep_ms(100)
     onboard_LED.toggle()
+
+def sendRestartRequest():
+    mqttClient.publish(topic=PUBLISH_TOPIC, msg=str("restart").encode(), qos=1) # type: ignore
 
 # long beep, short beep, short beep
 def beep():
@@ -80,10 +87,20 @@ while True:
     try:
         mqttClient.check_msg()
 
-        if(time() - picoGLastSeen > 25):
+        if(time() - picoGLastSeen > 45):
+            sendRestartRequest()
+            sleep(1)
             machine.reset()
 
-        sleep_ms(500)
+        sleep(2)
+        mqttClient.check_msg()
+        sleep(2)
+        mqttClient.check_msg()
+        sleep(2)
+        mqttClient.check_msg()
+        sleep(2)
+        mqttClient.check_msg()
+        sleep(2)
         sendAliveStatus()
     except:
         machine.reset()
