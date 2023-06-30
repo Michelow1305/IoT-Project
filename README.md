@@ -1,8 +1,5 @@
-# IoT-Project
-Summer course IoT 2023
+# Introduction
+Hello there! Welcome to my home security project I did for my IoT course in summer 2023.
 
-# Pinout
-Raspberry Pico W pinout:
-
-![grafik](https://github.com/Michelo05/IoT-Project/assets/19593240/a0da0f7b-4670-424f-ab34-d6bc981450ba)
+Since neighbors, parents or  eventually intruders could show up any second at my doorstep, being able to see my living room
 
