@@ -1,3 +1,4 @@
+# Pico D, the one in my living room desk
 from ubinascii import hexlify
 import machine
 from umqttsimple import MQTTClient

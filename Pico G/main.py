@@ -1,3 +1,4 @@
+# Pico G, the one on my gate
 from ubinascii import hexlify
 import machine
 from umqttsimple import MQTTClient
