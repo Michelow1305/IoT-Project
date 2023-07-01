@@ -161,6 +161,10 @@ As we can see, the gate was opened today at 2:43 pm, and 3:38 pm. It is closed n
 
 ## Finalizing the Design
 This project was a lot of fun and gave me a very nice feeling of privacy, since I always know beforehand when someone wants to come to my doorstep. Learning about micro python opened up a whole new world for me, after spending months on writing C for embedded systems, this was a nice and fun thing to do!
+
+Everything works very fine, and I am very sure it's not gonna let me down. (Hopefully I didn't just Jinx it now...)
+The buzzer beeps, the LED turns on and I know its time to put some clothes on :D
+
 Although one can't see a lot on them, here are some pictures, if you want to take a look: 
 
 ![grafik](https://github.com/Michelow1305/IoT-Project/assets/19593240/02d14ffc-041c-4ffa-b553-1e48c90256bc)
