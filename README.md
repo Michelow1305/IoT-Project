@@ -81,7 +81,7 @@ To know, If the gate is open or not, I connected a hall sensor and attached a ma
 
 I first thought about making that pico battery powered, but I have an outdoor plug one meter away from the gate. So, I decided to use that one old USB adapter that doesnâ€™t charge quickly anymore, obliterate a small old USB mini cable, and solder a long wire to the power cables, which went smoothly. I put the cable under the steppingstones to avoid anyone falling over it. Here is a connection diagram for you to see where I soldered what: (I know, its ugly...)
 
-![Pico G wiring diagram](https://github.com/Michelow1305/IoT-Project/assets/19593240/d30f21ff-9034-4465-871c-b83b5c4aee5c)
+![grafik](https://github.com/Michelow1305/IoT-Project/assets/19593240/bda3adc7-487b-4b10-8b91-dfd87f5028df)
 
 For now, to protect the pico against rain, I put it in a plastic bag. I will 3D-print a nice case for it when everything is done, but for now I need to keep it this way to make eventual adjustments easy.
 
@@ -90,7 +90,7 @@ Now, I want to describe the other pico on my living room desk, referred to as â€
 ### Pico D
 This pico just needs a buzzer and an LED. It is connected as follows:
 
-![Pico D wiring diagram](https://github.com/Michelow1305/IoT-Project/assets/19593240/6318ab0a-f2f2-475a-9a43-0acb42eaea93)
+![grafik](https://github.com/Michelow1305/IoT-Project/assets/19593240/776875b7-bd79-4270-afb2-7b7cee3e7f09)
 
 ## Platform
 The platform I used was the cloud based Adafruit MQTT broker. It is easy to set up and worked very well for me. I use the free plan, since it is enough for my project. 
