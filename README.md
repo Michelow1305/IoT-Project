@@ -12,7 +12,7 @@ Since neighbors, parents or eventually intruders could show up any second at my 
 The only way to my door is to go through that one gate outside. What if I attach something to the gate to notify me when someone enters? 
 I even wanted to go a step further: it should log when someone enters, because I want to see when it happened, not only the moment it happens.
 
-And that seemed to be quite feasible! I thought all that would be done in a couple of days, but it turned out later that there are more difficulties than I thought there would be.
+And that seemed to be quite feasible! I thought all that would be done in a couple of days, but it turned out later that there are more difficulties than I thought there would be. I estimate, if you follow along, it might take you 1 - 5 days, depending on your previous experience in the field.
 
 ## Material
 -	2x Raspberry Pi Pico
